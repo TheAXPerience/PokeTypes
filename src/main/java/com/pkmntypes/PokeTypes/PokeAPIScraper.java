@@ -1,7 +1,10 @@
 package com.pkmntypes.PokeTypes;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import reactor.core.publisher.Mono;
 
 @Service
 public class PokeAPIScraper {
@@ -21,19 +24,30 @@ public class PokeAPIScraper {
 				.uri(uriBuilder -> uriBuilder
 						.path("/pokemon-species/{pokename}")
 						.build(uri))
-				.retrieve()
-				.bodyToMono(PokemonSpecies.class)
+				.exchangeToMono(response -> {
+					if (response.statusCode().equals(HttpStatus.NOT_FOUND)) {
+						// if not found, return empty Mono
+						return Mono.empty();
+					} else {
+						return response.bodyToMono(PokemonSpecies.class);
+					}
+				})
 				.block();
 	}
 	
-	public PokemonForm getPokemonForm(String uri) {
+	public Mono<PokemonForm> getPokemonForm(String uri) {
 		return this.webclient
 				.get()
 				.uri(uriBuilder -> uriBuilder
 						.path("/{uri}")
 						.build(parseVarietyURL(uri)))
-				.retrieve()
-				.bodyToMono(PokemonForm.class)
-				.block();
+				.exchangeToMono(response -> {
+					if (response.statusCode().equals(HttpStatus.NOT_FOUND)) {
+						// if not found, return empty Mono
+						return Mono.empty();
+					} else {
+						return response.bodyToMono(PokemonForm.class);
+					}
+				});
 	}
 }

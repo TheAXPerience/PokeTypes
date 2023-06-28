@@ -31,14 +31,17 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class PokemonForm {
 	@JsonProperty("name")
 	private String name;
+	@JsonProperty("sprites")
+	private PokemonSprites sprites;
 	@JsonProperty("types")
 	private List<PokemonMasterType> types;
 	
 	public PokemonForm() {}
 
-	public PokemonForm(String name, List<PokemonMasterType> types) {
+	public PokemonForm(String name, PokemonSprites sprites, List<PokemonMasterType> types) {
 		super();
 		this.name = name;
+		this.sprites = sprites;
 		this.types = types;
 	}
 	@JsonProperty("name")
@@ -48,6 +51,14 @@ public class PokemonForm {
 	@JsonProperty("name")
 	public void setName(String name) {
 		this.name = name;
+	}
+	@JsonProperty("sprites")
+	public PokemonSprites getSprites() {
+		return sprites;
+	}
+	@JsonProperty("sprites")
+	public void setSprites(PokemonSprites sprites) {
+		this.sprites = sprites;
 	}
 	@JsonProperty("types")
 	public List<PokemonMasterType> getTypes() {
