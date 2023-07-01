@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,22 +32,28 @@ public class PokeTypesController {
 		
 		PokemonWeaknesses weaknesses = new PokemonWeaknesses();
 		List<String> types = new ArrayList<String>();
+		List<String> abilities = new ArrayList<String>();
 		
 		for (PokemonMasterType type : form.getTypes()) {
 			String t = type.getType().getName();
 			types.add(t);
 			weaknesses.addType(t);
 		}
+		for (PokemonAbility ability : form.getAbilities()) {
+			abilities.add(ability.getAbility().name());
+		}
 		
 		return Mono.just(new PokemonResponse(
 				form.getName(),
 				types,
+				abilities,
 				form.getSprites().getFrontSprite(),
 				weaknesses
 		));
 	}
 	
 	@GetMapping("/{pokename}")
+	@CrossOrigin
 	public ResponseEntity<List<PokemonResponse>> getPokemonTypes(@PathVariable("pokename") String pokemonName) {
 		try {
 			// get species
@@ -62,8 +69,8 @@ public class PokeTypesController {
 			// use Flux to asynchronously retrieve forms from their URLs
 			// then map them into Response objects
 			List<PokemonResponse> response = Flux.fromIterable(formUrls)
-				.flatMap(url -> pokeAPIScraper.getPokemonForm(url))
-				.flatMap(form -> createPokemonResponse(form))
+				.flatMapSequential(url -> pokeAPIScraper.getPokemonForm(url))
+				.flatMapSequential(form -> createPokemonResponse(form))
 				.collectList()
 				.block();
 			

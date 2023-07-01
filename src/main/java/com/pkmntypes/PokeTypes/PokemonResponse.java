@@ -5,14 +5,16 @@ import java.util.List;
 public class PokemonResponse {
 	private String name;
 	private List<String> types;
+	private List<String> abilities;
 	private String spriteUrl;
 	private PokemonWeaknesses weaknesses;
 	
 	public PokemonResponse() {}
-	public PokemonResponse(String name, List<String> types, String spriteUrl, PokemonWeaknesses weaknesses) {
+	public PokemonResponse(String name, List<String> types, List<String> abilities, String spriteUrl, PokemonWeaknesses weaknesses) {
 		super();
 		this.name = name;
 		this.types = types;
+		this.abilities = abilities;
 		this.spriteUrl = spriteUrl;
 		this.weaknesses = weaknesses;
 	}
@@ -27,6 +29,12 @@ public class PokemonResponse {
 	}
 	public void setTypes(List<String> types) {
 		this.types = types;
+	}
+	public List<String> getAbilities() {
+		return abilities;
+	}
+	public void setAbilities(List<String> abilities) {
+		this.abilities = abilities;
 	}
 	public String getSpriteUrl() {
 		return spriteUrl;

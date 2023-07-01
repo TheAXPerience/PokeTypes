@@ -29,6 +29,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 })
 // The base of /pokemon/{id}
 public class PokemonForm {
+	@JsonProperty("abilities")
+	List<PokemonAbility> abilities;
 	@JsonProperty("name")
 	private String name;
 	@JsonProperty("sprites")
@@ -38,11 +40,20 @@ public class PokemonForm {
 	
 	public PokemonForm() {}
 
-	public PokemonForm(String name, PokemonSprites sprites, List<PokemonMasterType> types) {
+	public PokemonForm(List<PokemonAbility> abilities, String name, PokemonSprites sprites, List<PokemonMasterType> types) {
 		super();
+		this.abilities = abilities;
 		this.name = name;
 		this.sprites = sprites;
 		this.types = types;
+	}
+	@JsonProperty("abilities")
+	public List<PokemonAbility> getAbilities() {
+		return abilities;
+	}
+	@JsonProperty("abilities")
+	public void setAbilities(List<PokemonAbility> abilities) {
+		this.abilities = abilities;
 	}
 	@JsonProperty("name")
 	public String getName() {
