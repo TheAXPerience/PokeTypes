@@ -5,7 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 public class PokeTypesApplication {
@@ -26,5 +28,5 @@ public class PokeTypesApplication {
 				.defaultCookie("key", "value")
 				.build();
 	}
-
+	
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@CrossOrigin
 @RestController
 public class PokeTypesController {
 	PokeAPIScraper pokeAPIScraper;
@@ -53,7 +54,6 @@ public class PokeTypesController {
 	}
 	
 	@GetMapping("/{pokename}")
-	@CrossOrigin
 	public ResponseEntity<List<PokemonResponse>> getPokemonTypes(@PathVariable("pokename") String pokemonName) {
 		try {
 			// get species
