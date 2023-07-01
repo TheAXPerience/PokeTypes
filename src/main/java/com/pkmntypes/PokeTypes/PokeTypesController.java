@@ -75,13 +75,8 @@ public class PokeTypesController {
 				.collectList()
 				.block();
 			
-			ResponseEntity<List<PokemonResponse>> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
-			
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("Access-Control-Allow-Origin", "*");
-			
 			// return the list of forms as responses
-			return new ResponseEntity<>(response, headers, HttpStatus.OK);
+			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			// e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
