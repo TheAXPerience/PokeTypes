@@ -60,6 +60,7 @@ public class PokeTypesController {
 			// get species
 			PokemonSpecies ps = pokeAPIScraper.getPokemon(parsePokemonName(pokemonName));
 			if (ps == null) {
+			  System.out.println("Pokemon Not Found");
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
 			// get forms
@@ -78,7 +79,7 @@ public class PokeTypesController {
 			// return the list of forms as responses
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
