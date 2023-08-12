@@ -23,7 +23,7 @@ public class PokeTypesApplication {
 				.baseUrl("https://pokeapi.co/api/v2/")
 				.codecs(codecs -> codecs
 						.defaultCodecs()
-						.maxInMemorySize(500 * 1024))
+						.maxInMemorySize(1000 * 1024))
 				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 				.defaultCookie("key", "value")
 				.build();
