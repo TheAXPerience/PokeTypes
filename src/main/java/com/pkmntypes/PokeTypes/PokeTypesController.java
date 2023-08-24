@@ -68,9 +68,10 @@ public class PokeTypesController {
 	  // pokemonName = parsePokemonName(pokemonName);
 	  // hard coding for the time being...
 	  // the issue: MOVE DATA
+	  /*
 	  if (pokemonName.equalsIgnoreCase("mew")) {
 	    return new ResponseEntity<>(List.of(PokemonResponse.MEW), HttpStatus.OK);
-	  }
+	  } */
 	  
 	  // then, try to get from API
 		try {
