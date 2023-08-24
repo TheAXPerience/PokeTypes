@@ -65,10 +65,10 @@ public class PokeTypesController {
 	@GetMapping("/{pokename}")
 	public ResponseEntity<List<PokemonResponse>> getPokemonTypes(@PathVariable("pokename") String pokemonName) {
 	  // first, try to get from service
-	  pokemonName = parsePokemonName(pokemonName);
+	  // pokemonName = parsePokemonName(pokemonName);
 	  // hard coding for the time being...
 	  // the issue: MOVE DATA
-	  if (pokemonName.equals("mew")) {
+	  if (pokemonName.equalsIgnoreCase("mew")) {
 	    return new ResponseEntity<>(List.of(PokemonResponse.MEW), HttpStatus.OK);
 	  }
 	  
