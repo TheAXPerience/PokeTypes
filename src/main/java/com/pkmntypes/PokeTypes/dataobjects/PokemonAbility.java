@@ -1,4 +1,4 @@
-package com.pkmntypes.PokeTypes;
+package com.pkmntypes.PokeTypes.dataobjects;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +11,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 	"slot"
 })
 public class PokemonAbility {
-	record Ability(String name, String url) {}
+	public record Ability(String name, String url) {}
+	
 	@JsonProperty("ability")
 	private Ability ability;
 	@JsonProperty("is_hidden")

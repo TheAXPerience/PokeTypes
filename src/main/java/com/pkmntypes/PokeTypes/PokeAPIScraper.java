@@ -4,6 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.pkmntypes.PokeTypes.dataobjects.PokemonForm;
+import com.pkmntypes.PokeTypes.dataobjects.PokemonSpecies;
+
 import reactor.core.publisher.Mono;
 
 @Service

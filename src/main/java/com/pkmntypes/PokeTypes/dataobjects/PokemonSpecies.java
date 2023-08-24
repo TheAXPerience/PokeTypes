@@ -1,4 +1,4 @@
-package com.pkmntypes.PokeTypes;
+package com.pkmntypes.PokeTypes.dataobjects;
 
 import java.util.List;
 

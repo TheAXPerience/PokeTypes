@@ -1,4 +1,4 @@
-package com.pkmntypes.PokeTypes;
+package com.pkmntypes.PokeTypes.dataobjects;
 
 public class PokemonWeaknesses {
 	private float normal;

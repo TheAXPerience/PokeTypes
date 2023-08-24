@@ -11,6 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pkmntypes.PokeTypes.dataobjects.PokemonAbility;
+import com.pkmntypes.PokeTypes.dataobjects.PokemonForm;
+import com.pkmntypes.PokeTypes.dataobjects.PokemonMasterType;
+import com.pkmntypes.PokeTypes.dataobjects.PokemonResponse;
+import com.pkmntypes.PokeTypes.dataobjects.PokemonSpecies;
+import com.pkmntypes.PokeTypes.dataobjects.PokemonVariety;
+import com.pkmntypes.PokeTypes.dataobjects.PokemonWeaknesses;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -56,11 +64,20 @@ public class PokeTypesController {
 	
 	@GetMapping("/{pokename}")
 	public ResponseEntity<List<PokemonResponse>> getPokemonTypes(@PathVariable("pokename") String pokemonName) {
+	  // first, try to get from service
+	  pokemonName = parsePokemonName(pokemonName);
+	  // hard coding for the time being...
+	  // the issue: MOVE DATA
+	  if (pokemonName.equals("mew")) {
+	    return new ResponseEntity<>(List.of(PokemonResponse.MEW), HttpStatus.OK);
+	  }
+	  
+	  // then, try to get from API
 		try {
 			// get species
-			PokemonSpecies ps = pokeAPIScraper.getPokemon(parsePokemonName(pokemonName));
+			PokemonSpecies ps = pokeAPIScraper.getPokemon(pokemonName);
 			if (ps == null) {
-			  System.out.println("Pokemon Not Found");
+			  // System.out.println("Pokemon Not Found");
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
 			// get forms

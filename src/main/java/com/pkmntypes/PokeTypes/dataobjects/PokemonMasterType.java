@@ -1,4 +1,4 @@
-package com.pkmntypes.PokeTypes;
+package com.pkmntypes.PokeTypes.dataobjects;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,8 +1,16 @@
-package com.pkmntypes.PokeTypes;
+package com.pkmntypes.PokeTypes.dataobjects;
 
 import java.util.List;
 
 public class PokemonResponse {
+  public static final PokemonResponse MEW = new PokemonResponse(
+      "mew",
+      List.of("psychic"),
+      List.of("synchronize"),
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png",
+      new PokemonWeaknesses(1f, 1f, 1f, 1f, 1f, 1f, 2f, 1f, 1f, 1f, 0.5f, 2f, 0.5f, 1f, 1f, 1f, 2f, 1f)
+  );
+  
 	private String name;
 	private List<String> types;
 	private List<String> abilities;
