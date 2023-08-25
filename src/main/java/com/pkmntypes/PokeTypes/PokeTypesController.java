@@ -71,7 +71,7 @@ public class PokeTypesController {
 	  pokemonName = parsePokemonName(pokemonName);
 	  List<PokemonResponse> results = service.getAllByName(pokemonName);
 	  if (results.size() > 0) {
-	    System.out.println(pokemonName + " retrieved from database.");
+	    // System.out.println(pokemonName + " retrieved from database.");
 	    return new ResponseEntity<>(results, HttpStatus.OK);
 	  }
 	  
