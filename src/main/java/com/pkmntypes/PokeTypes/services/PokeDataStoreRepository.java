@@ -9,5 +9,5 @@ import com.pkmntypes.PokeTypes.models.PokeDataStore;
 
 @Repository
 public interface PokeDataStoreRepository extends JpaRepository<PokeDataStore, Long> {
-  public List<PokeDataStore> findAllByName(String name);
+  public List<PokeDataStore> findAllBySpecies(String species);
 }

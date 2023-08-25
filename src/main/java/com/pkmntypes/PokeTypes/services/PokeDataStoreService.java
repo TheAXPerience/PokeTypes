@@ -17,15 +17,17 @@ public class PokeDataStoreService {
   @Autowired PokeDataStoreRepository pokeDataStoreRepository;
   
   @Transactional
-  public List<PokeDataStore> getAllByName(String name) {
-    List<PokeDataStore> ret = pokeDataStoreRepository.findAllByName(name);
-    if (ret == null) return new ArrayList<PokeDataStore>();
-    for (int i = ret.size() - 1; i >= 0; i--) {
+  public List<PokemonResponse> getAllByName(String name) {
+    List<PokeDataStore> results = pokeDataStoreRepository.findAllBySpecies(name);
+    List<PokemonResponse> ret = new ArrayList<PokemonResponse>();
+    if (results == null) return new ArrayList<PokemonResponse>();
+    for (PokeDataStore store : results) {
       // if the data is from before the start of the month, delete it
-      if (ret.get(i).getDateCreated().isBefore(YearMonth.now().atDay(1).atStartOfDay())) {
-        pokeDataStoreRepository.deleteAllInBatch(ret);
-        return new ArrayList<PokeDataStore>();
+      if (store.getDateCreated().isBefore(YearMonth.now().atDay(1).atStartOfDay())) {
+        pokeDataStoreRepository.deleteAllInBatch(results);
+        return new ArrayList<PokemonResponse>();
       }
+      ret.add(store.getResponse());
     }
     return ret;
   }
@@ -34,8 +36,7 @@ public class PokeDataStoreService {
   public void saveAll(List<PokemonResponse> responses, String name) {
     List<PokeDataStore> stores = new ArrayList<PokeDataStore>();
     for (PokemonResponse response : responses) {
-      response.setName(name);
-      stores.add(new PokeDataStore(response));
+      stores.add(new PokeDataStore(response, name));
     }
     pokeDataStoreRepository.saveAllAndFlush(stores);
   }

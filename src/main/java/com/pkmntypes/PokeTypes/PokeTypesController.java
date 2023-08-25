@@ -18,6 +18,7 @@ import com.pkmntypes.PokeTypes.dataobjects.PokemonResponse;
 import com.pkmntypes.PokeTypes.dataobjects.PokemonSpecies;
 import com.pkmntypes.PokeTypes.dataobjects.PokemonVariety;
 import com.pkmntypes.PokeTypes.dataobjects.PokemonWeaknesses;
+import com.pkmntypes.PokeTypes.services.PokeDataStoreService;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -26,9 +27,11 @@ import reactor.core.publisher.Mono;
 @RestController
 public class PokeTypesController {
 	PokeAPIScraper pokeAPIScraper;
+	PokeDataStoreService service;
 	
-	public PokeTypesController(PokeAPIScraper pokeAPIScraper) {
+	public PokeTypesController(PokeAPIScraper pokeAPIScraper, PokeDataStoreService pokeDataStoreService) {
 		this.pokeAPIScraper = pokeAPIScraper;
+		this.service = pokeDataStoreService;
 	}
 	
 	private String parsePokemonName(String pokemonName) {
@@ -65,13 +68,12 @@ public class PokeTypesController {
 	@GetMapping("/{pokename}")
 	public ResponseEntity<List<PokemonResponse>> getPokemonTypes(@PathVariable("pokename") String pokemonName) {
 	  // first, try to get from service
-	  // pokemonName = parsePokemonName(pokemonName);
-	  // hard coding for the time being...
-	  // the issue: MOVE DATA
-	  /*
-	  if (pokemonName.equalsIgnoreCase("mew")) {
-	    return new ResponseEntity<>(List.of(PokemonResponse.MEW), HttpStatus.OK);
-	  } */
+	  pokemonName = parsePokemonName(pokemonName);
+	  List<PokemonResponse> results = service.getAllByName(pokemonName);
+	  if (results.size() > 0) {
+	    System.out.println(pokemonName + " retrieved from database.");
+	    return new ResponseEntity<>(results, HttpStatus.OK);
+	  }
 	  
 	  // then, try to get from API
 		try {
@@ -93,6 +95,9 @@ public class PokeTypesController {
 				.flatMapSequential(form -> createPokemonResponse(form))
 				.collectList()
 				.block();
+			
+			// save list to database
+			service.saveAll(response, pokemonName);
 			
 			// return the list of forms as responses
 			return new ResponseEntity<>(response, HttpStatus.OK);
