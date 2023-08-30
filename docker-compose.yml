@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: api
+    image: poketypes-backend:0.0.1
+    ports:
+    - "8080:8000"
+    networks:
+      - poketypes
+  nginx:
+    container_name: nginx
+    image: poketypes-frontend:0.0.1
+    depends_on:
+    - api
+    ports:
+    - "80:80"
+    networks:
+      - poketypes
+
+networks:
+  poketypes:
+
+volumes:
+  poketypes:
